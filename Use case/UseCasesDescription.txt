@@ -1,0 +1,14 @@
+
+Usage of Simmulation Software.
+
+1. User starts Simmulation Software.
+
+2. User chooses operation mode (context) (Sudoku vs SmartFridge).
+
+3a. If Sudoku chosen: generate Sudoku puzzles.
+
+3b. If SmartFridge chosen: generate predefined fruit and vegetable pictures (apples, bananas, grapes, tomatoes).
+
+4. Generate pictures archive in zipped .jpg format (or whatever).
+
+5. User closes Simmulation Software.

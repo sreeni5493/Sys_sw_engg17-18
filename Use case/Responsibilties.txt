@@ -1,0 +1,9 @@
+Responsibilities:
+
+The main person in charge of the following tasks are given below. While the main person in charge ensures a smoother execution of these individual tasks, since we are a small team, most of the tasks would be commonly done and an unanimous vote will be the criteria for any decision.
+
+Scheduling, Testing: Mariusz
+
+Development, debugging: Jonas
+
+User interaction and motivation: Sreenivas
