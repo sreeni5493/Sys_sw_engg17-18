@@ -19,7 +19,7 @@
 
 
 \title{\begin{Huge}
-\textbf{Software Requirements Specification: Simulation Platform for Smart Fridge and Sudoku Solver}
+\textbf{Software Requirements Specification: Simulation Platform for SmartFridge and Sudoku Solver}
 \end{Huge}}
 \author{\begin{Large}
 Sreenivas, Jonas and Mariusz
@@ -29,7 +29,7 @@ Sreenivas, Jonas and Mariusz
 \thispagestyle{empty}
 \begin{center}
 \begin{large}
-\textbf{Version:} 1.0
+\textbf{Version:} 2.0
 \\  \textbf{Based on:} IEEE SRS Template
 \end{large}
 \end{center}
@@ -40,6 +40,7 @@ Sreenivas, Jonas and Mariusz
 \subsection{Purpose}
 This document is a software requirement specification for the simulation platform which is built to aid the SmartFridge and Sudoku solver projects by providing simulated data.
 \subsection{Document Conventions}
+The following conventions have been defined:
 \begin{itemize}
 \item Links are marked in blue color and are accessible through the web browser.
 \item Reference titles are in italics for easier viewing
@@ -56,12 +57,12 @@ A software platform for generating images which could be used as a dataset for o
 \newpage
 \section{Overall Description}
 \subsection{Product Perspective}
-It is a self contained project that can be used to simulate a large amount of data, which can potentially be used by developers, testers and users who wish to simulate images. These images include vegetables (in specific banana, tomatoes, apples and grapes) both in rotten and non-rotten form and sudoku puzzles with varying transformation and noise to evaluate other projects that require simulated data.
+The simulation platform is a self contained project that can be used to produce a user-defined amount of simulated data, which can potentially be used by developers, testers and users who wish to simulate images. These images include vegetables (in specific banana and tomatoes) both in rotten and non-rotten form and sudoku puzzles with varying transformation (deformations, rotations, translations) and noise to support other projects that require simulated data.
 
 \subsection{Product Functions}
 \begin{itemize}
 \item User gives context for his application which we use in our simulation platform
-\item The simulation platform generates a huge dataset of images with labels based on the context.
+\item The simulation platform generates a dataset of images with labels based on the context.
 \end{itemize}
 
 \begin{figure}[H]
@@ -69,11 +70,11 @@ It is a self contained project that can be used to simulate a large amount of da
 \end{figure}
 \subsection{User Classes and Characteristics}
 \begin{itemize}
-\item Developers and testers: Use simulated data for testing their algorithms
-\item Others: Create fancy simulated images.
+\item Developers and testers use simulated data for testing their algorithms
+\item Other users can create physically based rendering (PBR) simulated images.
 \end{itemize}
 \subsection{Operating Environment}
-The generated images should be readable and useful for other projects which use this to test their algorithms. The software should run on Linux and/or Microsoft Windows. The results should be readable on all major Operating Systems.
+The generated images should be readable and usable for other projects which use this to test their algorithms. Therefore, the software should run on Linux and/or Microsoft Windows. The results should be readable on all major Operating Systems.
 \subsection{Design and Implementation Constraints}
 \begin{itemize}
 \item Complexity of the model in context to simulate is a constraint for the developers.

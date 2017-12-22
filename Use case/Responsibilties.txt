@@ -6,4 +6,4 @@ Scheduling, Testing: Mariusz
 
 Development, debugging: Jonas
 
-User interaction and motivation: Sreenivas
+User interaction and data collection from users: Sreenivas
