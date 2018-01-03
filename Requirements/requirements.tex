@@ -56,42 +56,59 @@ A software platform for generating images which could be used as a dataset for o
 \end{itemize}
 \newpage
 \section{Overall Description}
-\subsection{Product Perspective}
+\subsection{Product Perspective}\label{ProductPerspective}
 The simulation platform is a self contained project that can be used to produce a user-defined amount of simulated data, which can potentially be used by developers, testers and users who wish to simulate images. These images include vegetables (in specific banana and tomatoes) both in rotten and non-rotten form and sudoku puzzles with varying transformation (deformations, rotations, translations) and noise to support other projects that require simulated data.
 
 \subsection{Product Functions}
-\begin{itemize}
-\item User gives context for his application which we use in our simulation platform
-\item The simulation platform generates a dataset of images with labels based on the context.
-\end{itemize}
+The simulation software has to be able to produce context based and adjustable images.
+Therefore the user choses a context and adjusts the parameters if necessary. The software produces a preview for review of the user and renders the image(s) if he accepts the scene.
 
 \begin{figure}[H]
 \includegraphics[scale=0.6]{sys_sw.png}
 \end{figure}
 \subsection{User Classes and Characteristics}
-\begin{itemize}
-\item Developers and testers use simulated data for testing their algorithms
-\item Other users can create physically based rendering (PBR) simulated images.
-\end{itemize}
+The following table contains the expected users and their characteristics.\\
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{User} & Developer & Tester & External users \\
+\hline
+\textbf{Importance} & highest & high & low \\
+\hline
+\textbf{Usage extent} & Only specific feature & Only specific feature & All features \\
+\hline
+\textbf{Technical expertise} & high & high & low\\
+\hline
+\textbf{Frequency of use} & high & high & low \\
+\hline
+\textbf{Term of usage} & limited & short & long\\
+\hline
+\textbf{Description of usage} & The Developer will & Tester will use the & External users may\\
+& use the simulation & simulation platform & use the software for \\ 
+&  platform to design and  & form to test and & practical and/or.\\
+&  validate their code. & validate specific & nonpractical use. \\
+& & systems. & \\
+\hline
+\end{tabular}
 \subsection{Operating Environment}
-The generated images should be readable and usable for other projects which use this to test their algorithms. Therefore, the software should run on Linux and/or Microsoft Windows. The results should be readable on all major Operating Systems.
+The generated images should primarily be readable and usable for the other project groups which use this to test their algorithms. Therefore, the software should run on common and available operating systems like Linux and/or Microsoft Windows. The results are stored in common file formats on these operating systems to grant the maximum possible compatibility.
 \subsection{Design and Implementation Constraints}
 \begin{itemize}
-\item Complexity of the model in context to simulate is a constraint for the developers.
-\item The software should run on a laptop with average capabilities.
-\item Users/Customers should know how to run simple exe files or commands from the terminal and have basic knowledge on their system's capabilties.
+\item The software should run on any computerlike device and scale the scene according to the processor and RAM.
+\item The required simulation time scales with the hardware of the operating system. It his highly recommended that a user is aware of his system's capabilities.
+\item The software is exclusively available in an english version.
+\item There will be no maintaining in excess of this lecture.
 
 \end{itemize}
 \subsection{User Documentation}
-The following documents will be given to the user:
+The following documents in pdf format will be available for users:
 \begin{itemize}
 \item User Manual.
 \item Troubleshooting, FAQs.
-\item Tutorials and samples.
 \end{itemize}
 \subsection{Assumption and Dependencies}
-This particular software depends on open sourced simulation platforms such as Blender, Unreal Engine.
+This particular software depends on the open sourced softwares Blender and FEniCS.
 \newpage
+
 \section{External Interface Requirements}
 \subsection{User Interfaces}
 The software provides a simple user interface as shown below:
@@ -103,21 +120,30 @@ The systems works stand alone and the generated results are stored on the same h
 \subsection{Software Interfaces}
 The dataset generated from the hardware is passed on as an image data. 
 
+
 \newpage
 \section{System Features}
 \subsection{Generate Images}
-This feature pertains to generating a dataset of rendered images. It has high priority.
-
-
+This feature pertains to generating a dataset of rendered images. It has highest priority.
 \subsubsection{Stimulus/Response Sequences}
-\begin{itemize}
-\item User runs the software.
-\item User chooses to select or reject the generated image.
-\end{itemize}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Stimulus} & \textbf{Response} \\
+\hline
+User runs the software.	& Context dialogue shows up. \\
+\hline
+User selects content & parameter dialogue shows up. \\
+\hline
+User adjusts parameters. & Scene preview appears. \\
+\hline
+User confirms or rejects the generated scene. & \textbullet $\,$ Image is rendered and saved.\\
+& \textbullet $\,$ New scene is generated. \\
+\hline
+\end{tabular}
 \subsubsection{Functional Requirements}
 \begin{itemize}
 \item \textbf{REQ-1:} Simulate images based on the requirements from the projects: SmartFridge and Sudoku solver.
-\item \textbf{REQ-2:} Display images for user interaction.
+\item \textbf{REQ-2:} Display scene for user interaction.
 \item \textbf{REQ-3:} Provide labels/annotations for selected images by the user.
 \item \textbf{REQ-4:} Saving the selected images for future use.
 \end{itemize}
