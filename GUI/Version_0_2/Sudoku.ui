@@ -345,12 +345,25 @@
     <rect>
      <x>17</x>
      <y>17</y>
-     <width>761</width>
+     <width>521</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
-    <string>                                               Frontend for Sudoku Solver input images simulation with a lot of good looking sliders.</string>
+    <string>Frontend for Sudoku Solver input images simulation with a lot of good looking sliders.</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>547</x>
+     <y>30</y>
+     <width>231</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Edit generated database</string>
    </property>
   </widget>
  </widget>
