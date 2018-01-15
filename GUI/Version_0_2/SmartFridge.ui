@@ -191,7 +191,7 @@
     <item row="3" column="0">
      <widget class="QLabel" name="label_5">
       <property name="text">
-       <string>TextLabel</string>
+       <string>Image resolution</string>
       </property>
      </widget>
     </item>
@@ -219,7 +219,7 @@
     <item row="3" column="1">
      <widget class="QLabel" name="label_9">
       <property name="text">
-       <string>TextLabel</string>
+       <string/>
       </property>
      </widget>
     </item>
@@ -340,12 +340,25 @@
     <rect>
      <x>17</x>
      <y>17</y>
-     <width>761</width>
+     <width>511</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
-    <string>                                               Frontend for SmartFridge input images simulation with a lot of good looking sliders.</string>
+    <string>Frontend for SmartFridge input images simulation with a lot of good looking sliders.</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>547</x>
+     <y>30</y>
+     <width>231</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Edit generated database</string>
    </property>
   </widget>
  </widget>
