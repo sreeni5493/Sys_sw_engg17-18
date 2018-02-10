@@ -2,6 +2,7 @@ from random import random, shuffle
 from itertools import chain
 from math import floor
 import subprocess
+import sudoku
 
 class Sudoku:
     def __init__(self, difficulty, errors = 0, completion = 1, res_x = 1920, res_y = 1080, frontal_view = 1):
@@ -24,8 +25,8 @@ class Sudoku:
                                 "Insane" : [[0, 9, 0, 7, 3, 0, 5, 0, 0, 7, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 6, 2, 0, 0, 0, 0, 4, 0, 5, 0, 0, 0, 0, 9, 0, 0, 7, 0, 0, 0, 0, 4, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 8, 0, 6, 0, 0, 0, 0, 8, 0, 2, 5, 0, 3, 0, 9],
                                            [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 4, 0, 8, 7, 0, 0, 0, 6, 0, 1, 8, 2, 0, 3, 4, 7, 0, 0, 0, 0, 0, 9, 8, 0, 0, 2, 0, 0, 0, 3, 0, 2, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 5, 0, 8, 0, 0, 0, 0, 7, 2, 1, 0, 0, 6, 0, 4, 0, 0, 0, 0, 7, 0, 0, 4, 0, 2, 0, 0, 0, 3]]}
         r = floor(random()*len(self.precreated_sudoku_dict[difficulty]))
-        self.complete_sudoku = self.precreated_sudoku_dict[difficulty][r]
-        self.unsolved_sudoku = self.precreated_unsolved_sudoku_dict[difficulty][r]
+        self.complete_sudoku = self.precreated_sudoku_dict[difficulty][int(r)]
+        self.unsolved_sudoku = self.precreated_unsolved_sudoku_dict[difficulty][int(r)]
         self.completion = completion
         self.difficulty = difficulty
         self.errors = errors
@@ -118,8 +119,8 @@ class Sudoku:
     
 if __name__ == '__main__':
     s = Sudoku("Hard", 0, 1)
-    string_call = [r'C:\Program Files\Blender Foundation\Blender\blender.exe']
+    string_call = '/home/sreenivas/Downloads/blender-2.79-linux-glibc219-x86_64/blender'
     #arguments = []
     #string_call.append(arguments)
     print(string_call)
-    subprocess.call([string_call,"-b","--python",r'C:\Users\JonasSimon\Documents\sys_sw_eng\Sys_sw_engg17-18\Simulations\sudoku\generate_sudoku_scene.py',"--","--difficulty","%s"%s.difficulty,"--errors","%d"%s.errors,"--completion","%d"%s.completion,"--resolution","%d"%s.r_x,"%d"%s.r_y,"--solved","%s"%s.complete_sudoku,"--unsolved","%s"%s.unsolved_sudoku,"--frontal_view","%s"%s.frontal_view])
+    subprocess.call([string_call,"-b","--python",'./generate_sudoku_scene.py',"--","--difficulty","%s"%s.difficulty,"--errors","%d"%s.errors,"--completion","%d"%s.completion,"--resolution","%d"%s.r_x,"%d"%s.r_y,"--solved","%s"%s.complete_sudoku,"--unsolved","%s"%s.unsolved_sudoku,"--frontal_view","%s"%s.frontal_view])
