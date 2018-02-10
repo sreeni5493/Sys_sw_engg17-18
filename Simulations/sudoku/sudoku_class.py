@@ -5,7 +5,7 @@ import subprocess
 import sudoku
 
 class Sudoku:
-    def __init__(self, difficulty, errors = 0, completion = 1, res_x = 1920, res_y = 1080, frontal_view = 1):
+    def __init__(self, difficulty, errors = 0, completion = 1, res_x = 1920, res_y = 1080, frontal_view = 1, num_images = 1):
         self.cTex_hand = []
         self.cTex_font = []
         self.precreated_sudoku_dict = {"Easy" : [[1, 5, 2, 6, 4, 3, 7, 9, 8, 9, 3, 7, 1, 5, 8, 2, 6, 4, 8, 4, 6, 9, 7, 2, 5, 1, 3, 3, 9, 8, 5, 6, 4, 1, 2, 7, 4, 6, 5, 2, 1, 7, 3, 8, 9, 2, 7, 1, 3, 8, 9, 6, 4, 5, 5, 8, 9, 7, 2, 6, 4, 3, 1, 6, 1, 3, 4, 9, 5, 8, 7, 2, 7, 2, 4, 8, 3, 1, 9, 5, 6],\
@@ -33,6 +33,7 @@ class Sudoku:
         self.r_x = res_x
         self.r_y = res_y
         self.frontal_view = frontal_view
+        self.num_images = num_images
 
     def randomize_sudoku(self):
         r = floor(random()*len(self.precreated_sudoku_dict[self.difficulty]))
@@ -117,10 +118,14 @@ class Sudoku:
         else:
             self.frontal_view = 0
     
+    def set_num_images(self,val):
+        self.num_images = val
+
+    def create(self):
+        string_call = 'blender'
+        subprocess.call([string_call,"-b","--python",'./generate_sudoku_scene.py',"--","--difficulty","%s"%s.difficulty,"--errors","%d"%s.errors,"--completion","%d"%s.completion,"--resolution","%d"%s.r_x,"%d"%s.r_y,"--solved","%s"%s.complete_sudoku,"--unsolved","%s"%s.unsolved_sudoku,"--frontal_view","%s"%s.frontal_view,"--num_images",str(s.num_images)])
+
 if __name__ == '__main__':
     s = Sudoku("Hard", 0, 1)
-    string_call = '/home/sreenivas/Downloads/blender-2.79-linux-glibc219-x86_64/blender'
-    #arguments = []
-    #string_call.append(arguments)
-    print(string_call)
-    subprocess.call([string_call,"-b","--python",'./generate_sudoku_scene.py',"--","--difficulty","%s"%s.difficulty,"--errors","%d"%s.errors,"--completion","%d"%s.completion,"--resolution","%d"%s.r_x,"%d"%s.r_y,"--solved","%s"%s.complete_sudoku,"--unsolved","%s"%s.unsolved_sudoku,"--frontal_view","%s"%s.frontal_view])
+    s.create()
+

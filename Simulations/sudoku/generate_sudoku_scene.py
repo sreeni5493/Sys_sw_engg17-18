@@ -228,8 +228,9 @@ if __name__ == '__main__':
     argv = sys.argv
     argv = argv[argv.index("--") + 1 :]
 
-    s = SudokuScene(argv[argv.index("--difficulty") + 1], argv[argv.index("--errors") + 1], argv[argv.index("--completion") + 1], argv[argv.index("--resolution") + 1], argv[argv.index("--resolution") + 2], argv[argv.index("--solved") + 1], argv[argv.index("--unsolved") + 1], argv[argv.index("--frontal_view") + 1])
-    s.visualize()
-    s.induce_errors()
-    s.write("image")
-    s.crumble("image")
+    for i in range(0,int(argv[argv.index("--num_images") + 1])):
+        s = SudokuScene(argv[argv.index("--difficulty") + 1], argv[argv.index("--errors") + 1], argv[argv.index("--completion") + 1], argv[argv.index("--resolution") + 1], argv[argv.index("--resolution") + 2], argv[argv.index("--solved") + 1], argv[argv.index("--unsolved") + 1], argv[argv.index("--frontal_view") + 1])
+        s.visualize()
+        s.induce_errors()
+        s.write("image%d"%i)
+        #s.crumble("image")
