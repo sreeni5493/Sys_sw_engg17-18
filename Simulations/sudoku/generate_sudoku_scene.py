@@ -1,11 +1,12 @@
-import bpy
-from random import random
+from random import random, shuffle
 from math import floor, atan, pi
-import sys
+from itertools import chain
 import time
+import bpy
+import sys
 
 class SudokuScene:
-    def __init__(self, difficulty, errors, completion, res_x, res_y, solved, unsolved,frontal_view):
+    def __init__(self, difficulty, errors, completion, res_x, res_y, solved, unsolved, mix_fonts):
         self.images_hand = [["./fonts/blank.png","./fonts/handwritten/basin/1.png","./fonts/handwritten/basin/2.png","./fonts/handwritten/basin/3.png","./fonts/handwritten/basin/4.png","./fonts/handwritten/basin/5.png","./fonts/handwritten/basin/6.png","./fonts/handwritten/basin/7.png","./fonts/handwritten/basin/8.png","./fonts/handwritten/basin/9.png"],
                             ["./fonts/blank.png","./fonts/handwritten/BelindaType67/1.png","./fonts/handwritten/BelindaType67/2.png","./fonts/handwritten/BelindaType67/3.png","./fonts/handwritten/BelindaType67/4.png","./fonts/handwritten/BelindaType67/5.png","./fonts/handwritten/BelindaType67/6.png","./fonts/handwritten/BelindaType67/7.png","./fonts/handwritten/BelindaType67/8.png","./fonts/handwritten/BelindaType67/9.png"],
                             ["./fonts/blank.png","./fonts/handwritten/otto/1.png","./fonts/handwritten/otto/2.png","./fonts/handwritten/otto/3.png","./fonts/handwritten/otto/4.png","./fonts/handwritten/otto/5.png","./fonts/handwritten/otto/6.png","./fonts/handwritten/otto/7.png","./fonts/handwritten/otto/8.png","./fonts/handwritten/otto/9.png"]]
@@ -17,6 +18,7 @@ class SudokuScene:
         self.difficulty = difficulty
         self.errors = int(errors)
         self.bgcolor = (1,0.9+random()*0.1,0.7+random()*0.3)
+        print(self.bgcolor)
         self.groundtruth = [[],[],[]]
         for i in range(0,81):
             self.groundtruth[0].append(0)
@@ -25,23 +27,51 @@ class SudokuScene:
         self.fields = []
         self.r_x = int(res_x)
         self.r_y = int(res_y)
-        self.bgcolor = (1,0.9+random()*0.1,0.7+random()*0.3)
-        self.frontal_view = int(frontal_view)
-        self.cTex_hand = []
+        self.bgcolor = (0,0,0)
+        self.cTex_hand = [[],[],[]]
+        self.fix_cTex_hand = []
         self.cTex_font = []
         self.__load_fonts()
+        self.mix_fonts = int(mix_fonts)
     
     def __load_fonts(self):
         for i in range(0,10):
             try:
-                img = bpy.data.images.load(self.images_hand[floor(random()*3)][i])
+                img = bpy.data.images.load(self.images_hand[0][i])
             except:
-                raise NameError("Cannot load image %s" % self.images_hand[i])
+                raise NameError("Cannot load image %s" % self.images_hand[0][i])
             # Create image texture from image
             cTex = bpy.data.textures.new('ColorTexHand%d'%i, type = 'IMAGE')
             cTex.image = img
-            self.cTex_hand.append(cTex)
-        
+            self.cTex_hand[0].append(cTex)
+        for i in range(0,10):
+            try:
+                img = bpy.data.images.load(self.images_hand[1][i])
+            except:
+                raise NameError("Cannot load image %s" % self.images_hand[1][i])
+            # Create image texture from image
+            cTex = bpy.data.textures.new('ColorTexHand%d'%i, type = 'IMAGE')
+            cTex.image = img
+            self.cTex_hand[1].append(cTex)
+        for i in range(0,10):
+            try:
+                img = bpy.data.images.load(self.images_hand[2][i])
+            except:
+                raise NameError("Cannot load image %s" % self.images_hand[2][i])
+            # Create image texture from image
+            cTex = bpy.data.textures.new('ColorTexHand%d'%i, type = 'IMAGE')
+            cTex.image = img
+            self.cTex_hand[2].append(cTex)
+        for i in range(0,10):
+            r = floor(random()*3)
+            try:
+                img = bpy.data.images.load(self.images_hand[r][i])
+            except:
+                raise NameError("Cannot load image %s" % self.images_hand[r][i])
+            # Create image texture from image
+            cTex = bpy.data.textures.new('ColorTexHand%d'%i, type = 'IMAGE')
+            cTex.image = img
+            self.fix_cTex_hand.append(cTex)
         for i in range(0,10):
             try:
                 img = bpy.data.images.load(self.images_font[i])
@@ -56,6 +86,8 @@ class SudokuScene:
         bpy.ops.object.select_all(action='TOGGLE')
         bpy.ops.object.select_all(action='TOGGLE')
         bpy.ops.object.delete(use_global=False)
+
+        self.bgcolor = (1,0.9+random()*0.1,0.7+random()*0.3)
 
         #------------------
         #  Sudoku planes
@@ -123,18 +155,12 @@ class SudokuScene:
             bpy.context.scene.objects.link(camera_object)
             camera = bpy.data.objects["Camera"]
         bpy.context.scene.camera = camera
-        if self.frontal_view:
-            movement_x = 0#random()*15-7.5
-            movement_y = 0#random()*15-7.5
-        else:
-            movement_x = random()*15-7.5
-            movement_y = random()*15-7.5
+        movement_x = 0
+        movement_y = 0
         camera.location = (movement_x, movement_y, 22)
         camera.rotation_euler[0] = -atan(movement_y/22.0)
         camera.rotation_euler[1] = atan(movement_x/22.0)
         camera.rotation_euler[2] = 0
-        
-        #TODO: Move and rotate camera slightly randomly.
 
     def __create_number_field(self,x,y,type,field_value):
         # Create plane
@@ -148,7 +174,11 @@ class SudokuScene:
         # Add texture slot for color texture
         mtex = mat.texture_slots.add()
         if type == "hand":
-            mtex.texture = self.cTex_hand[field_value]
+            print("self.mix_fonts = "+str(self.mix_fonts))
+            if self.mix_fonts == 1:
+                mtex.texture = self.cTex_hand[floor(random()*3)][field_value]
+            else:
+                mtex.texture = self.fix_cTex_hand[field_value]
         else:
             mtex.texture = self.cTex_font[field_value]
         mtex.texture_coords = 'UV'
@@ -175,8 +205,8 @@ class SudokuScene:
                     break
             error_plane.data.materials[0].texture_slots[0].texture = self.cTex_hand[r]
             #error_plane.data.materials[0].diffuse_color = (1,0,0)
-            print("%d: %d -> %d" % (x+1,correct_val,r))
-            print("x: %d, y: %d" % (floor(x/9)+1,9-(x%9)))
+            #print("%d: %d -> %d" % (x+1,correct_val,r))
+            #print("x: %d, y: %d" % (floor(x/9)+1,9-(x%9)))
             self.groundtruth[2][x] = 1
             self.groundtruth[1][x] = r
     
@@ -189,9 +219,6 @@ class SudokuScene:
         errors = ""
         font = ""
         handwritten = ""
-        filename_tmp = list(filename)
-        filename_tmp[0] = "."
-        filename = "".join(filename_tmp)
         f = open('%s.csv'%filename,'w')
         f.write("solution\n")
         for i in range(0,9):
@@ -219,18 +246,66 @@ class SudokuScene:
             errors = ""
         f.close()
         
+    def randomize_sudoku(self):
+        blocksize = 9
+        r = random()
+        permutation_list = [i for i in range(0,81)]
+        for i in range(0,3):
+            blocks = [permutation_list[i:i+blocksize] for i in range(i*3*blocksize,(i+1)*3*blocksize,blocksize)]
+            print(blocks)
+            shuffle(blocks)
+            permutation_list[i*3*blocksize:(i+1)*3*blocksize] = [b for bs in blocks for b in bs]
+        # Flip sudoku to shuffle former lines
+        blocks = [permutation_list[i:i+blocksize] for i in range(0,len(permutation_list),blocksize)]
+        blocks = zip(*blocks)
+        permutation_list = list(chain(*blocks))
+        for i in range(0,3):
+            print(permutation_list)
+            print(blocksize)
+            blocks = [permutation_list[i:i+blocksize] for i in range(i*3*blocksize,(i+1)*3*blocksize,blocksize)]
+            print("blocks" + str(blocks))
+            shuffle(blocks)
+            permutation_list[i*3*blocksize:(i+1)*3*blocksize] = [b for bs in blocks for b in bs]
+        # Maybe flip back
+        if (random() < 0.5):
+            blocks = [permutation_list[i:i+blocksize] for i in range(0,len(permutation_list),blocksize)]
+            blocks = zip(*blocks)
+            permutation_list[0:len(permutation_list)] = [b for bs in blocks for b in bs]
+        # Reorder sudokus
+        tmp_complete_sudoku = []
+        tmp_unsolved_sudoku = []
+        for i in range(0,81):
+            tmp_complete_sudoku.append(self.complete_sudoku[permutation_list[i]])
+            tmp_unsolved_sudoku.append(self.unsolved_sudoku[permutation_list[i]])
+        self.complete_sudoku = tmp_complete_sudoku
+        self.unsolved_sudoku = tmp_unsolved_sudoku
+        #del tmp_complete_sudoku,tmp_unsolved_sudokus
+
+    def rotate_camera(self):
+        camera = bpy.data.objects["Camera"]
+        bpy.context.scene.camera = camera
+        movement_x = random()*15-7.5
+        movement_y = random()*15-7.5
+        camera.location = (movement_x, movement_y, 22)
+        camera.rotation_euler[0] = -atan(movement_y/22.0)
+        camera.rotation_euler[1] = atan(movement_x/22.0)
+        camera.rotation_euler[2] = 0
+
     def crumble(self,name):
         pass
 
 if __name__ == '__main__':
-
-    print("na immerhin")
     argv = sys.argv
     argv = argv[argv.index("--") + 1 :]
-
+    s = SudokuScene(argv[argv.index("--difficulty") + 1], argv[argv.index("--errors") + 1], argv[argv.index("--completion") + 1], argv[argv.index("--resolution") + 1], argv[argv.index("--resolution") + 2], argv[argv.index("--solved") + 1], argv[argv.index("--unsolved") + 1], argv[argv.index("--mix_fonts") + 1])
+    s.visualize()    
     for i in range(0,int(argv[argv.index("--num_images") + 1])):
-        s = SudokuScene(argv[argv.index("--difficulty") + 1], argv[argv.index("--errors") + 1], argv[argv.index("--completion") + 1], argv[argv.index("--resolution") + 1], argv[argv.index("--resolution") + 2], argv[argv.index("--solved") + 1], argv[argv.index("--unsolved") + 1], argv[argv.index("--frontal_view") + 1])
-        s.visualize()
+        if (int(argv[argv.index("--change_sudoku") + 1]) == 1):
+            s.randomize_sudoku()
+            if (i != 0):
+                s.visualize()
+        if (int(argv[argv.index("--frontal_view") + 1]) == 0):
+            s.rotate_camera()
         s.induce_errors()
         s.write("image%d"%i)
         #s.crumble("image")

@@ -1,11 +1,10 @@
-from random import random, shuffle
-from itertools import chain
+from random import random
 from math import floor
 import subprocess
-import sudoku
+#import sudoku
 
 class Sudoku:
-    def __init__(self, difficulty, errors = 0, completion = 1, res_x = 1920, res_y = 1080, frontal_view = 1, num_images = 1):
+    def __init__(self, difficulty, errors = 0, completion = 1, res_x = 1920, res_y = 1080, frontal_view = 1, num_images = 1, change_sudoku = 1, mix_fonts = 0):
         self.cTex_hand = []
         self.cTex_font = []
         self.precreated_sudoku_dict = {"Easy" : [[1, 5, 2, 6, 4, 3, 7, 9, 8, 9, 3, 7, 1, 5, 8, 2, 6, 4, 8, 4, 6, 9, 7, 2, 5, 1, 3, 3, 9, 8, 5, 6, 4, 1, 2, 7, 4, 6, 5, 2, 1, 7, 3, 8, 9, 2, 7, 1, 3, 8, 9, 6, 4, 5, 5, 8, 9, 7, 2, 6, 4, 3, 1, 6, 1, 3, 4, 9, 5, 8, 7, 2, 7, 2, 4, 8, 3, 1, 9, 5, 6],\
@@ -34,46 +33,10 @@ class Sudoku:
         self.r_y = res_y
         self.frontal_view = frontal_view
         self.num_images = num_images
-
-    def randomize_sudoku(self):
-        r = floor(random()*len(self.precreated_sudoku_dict[self.difficulty]))
-        self.complete_sudoku = self.precreated_sudoku_dict[self.difficulty][r]
-        self.unsolved_sudoku = self.precreated_unsolved_sudoku_dict[self.difficulty][r]
-        blocksize = 9
-        r = random()
-        permutation_list = [i for i in range(0,81)]
-        for i in range(0,3):
-            blocks = [permutation_list[i:i+blocksize] for i in range(i*3*blocksize,(i+1)*3*blocksize,blocksize)]
-            print(blocks)
-            shuffle(blocks)
-            permutation_list[i*3*blocksize:(i+1)*3*blocksize] = [b for bs in blocks for b in bs]
-        # Flip sudoku to shuffle former lines
-        blocks = [permutation_list[i:i+blocksize] for i in range(0,len(permutation_list),blocksize)]
-        blocks = zip(*blocks)
-        permutation_list = list(chain(*blocks))
-        for i in range(0,3):
-            print(permutation_list)
-            print(blocksize)
-            blocks = [permutation_list[i:i+blocksize] for i in range(i*3*blocksize,(i+1)*3*blocksize,blocksize)]
-            print("blocks" + str(blocks))
-            shuffle(blocks)
-            permutation_list[i*3*blocksize:(i+1)*3*blocksize] = [b for bs in blocks for b in bs]
-        # Maybe flip back
-        if (random() < 0.5):
-            blocks = [permutation_list[i:i+blocksize] for i in range(0,len(permutation_list),blocksize)]
-            blocks = zip(*blocks)
-            permutation_list[0:len(permutation_list)] = [b for bs in blocks for b in bs]
-        # Reorder sudokus
-        tmp_complete_sudoku = []
-        tmp_unsolved_sudoku = []
-        for i in range(0,81):
-            tmp_complete_sudoku.append(self.complete_sudoku[permutation_list[i]])
-            tmp_unsolved_sudoku.append(self.unsolved_sudoku[permutation_list[i]])
-        self.complete_sudoku = tmp_complete_sudoku
-        self.unsolved_sudoku = tmp_unsolved_sudoku
-        del tmp_complete_sudoku,tmp_unsolved_sudokus
+        self.change_sudoku = change_sudoku
+        self.mix_fonts = mix_fonts
     
-    def create_new_sudoku(self):
+    """def create_new_sudoku(self):
         start = time.time()
 
         # Create sudoku data
@@ -94,19 +57,19 @@ class Sudoku:
                 self.unsolved_sudoku[i] = 0
                 
         end = time.time()
-        print("sudoku generation took ",end - start," seconds")
+        print("sudoku generation took ",end - start," seconds")"""
         
-    def set_errors(self,val):
-        self.errors = val
-    
     def set_difficulty(self,val):
         if (val == "Easy" or val == "Medium" or val == "Hard" or val == "Insane"):
             self.difficulty = val
         else:
             raise ValueError('Difficulty can\'t be set to %s.'%val)
-    
+
     def set_errors(self,val):
-        self.errors = val        
+        self.errors = val
+    
+    def set_completion(self,val):
+        self.completion = val
     
     def set_resolution(self,val1,val2):
         self.r_x = val1
@@ -121,11 +84,27 @@ class Sudoku:
     def set_num_images(self,val):
         self.num_images = val
 
+    def set_change_sudoku(self,val):
+        if val:
+            self.change_sudoku = 1
+        else:
+            self.change_sudoku = 0
+
+    def set_mix_fonts(self,val):
+        if val:
+            self.mix_fonts = 1
+        else:
+            self.mix_fonts = 0
+
     def create(self):
         string_call = 'blender'
-        subprocess.call([string_call,"-b","--python",'./generate_sudoku_scene.py',"--","--difficulty","%s"%s.difficulty,"--errors","%d"%s.errors,"--completion","%d"%s.completion,"--resolution","%d"%s.r_x,"%d"%s.r_y,"--solved","%s"%s.complete_sudoku,"--unsolved","%s"%s.unsolved_sudoku,"--frontal_view","%s"%s.frontal_view,"--num_images",str(s.num_images)])
+        subprocess.call([string_call,"-b","--python",'./generate_sudoku_scene.py',"--","--difficulty","%s"%s.difficulty,"--errors","%d"%s.errors,"--completion","%d"%s.completion,"--resolution","%d"%s.r_x,"%d"%s.r_y,"--solved","%s"%s.complete_sudoku,"--unsolved","%s"%s.unsolved_sudoku,"--frontal_view","%s"%s.frontal_view,"--num_images",str(s.num_images),"--change_sudoku",str(s.change_sudoku),"--mix_fonts",str(s.mix_fonts)])
 
 if __name__ == '__main__':
-    s = Sudoku("Hard", 0, 1)
+    s = Sudoku("Insane", 0, 2)
+    s.set_num_images(5)
+    s.set_change_sudoku(False)
+    s.set_frontal_view(False)
+    s.set_mix_fonts(True)
     s.create()
 
