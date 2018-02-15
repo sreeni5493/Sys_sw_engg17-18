@@ -61,11 +61,18 @@ It is a self contained project that can be used to simulate a large amount of da
 The two teams: SmartFridge and Sudoku Solver require data which might be hard to collect. Thus, a simulation tool that renders images with ground truths can provide a large dataset that represents real images.
 \section{System Architecture}
 \begin{figure}[H]
-\includegraphics[scale=0.5]{system_workflow.png}
-\caption{System Workflow}
+\includegraphics[scale=0.5]{architecture.png}
+\caption{System architecture}
+\label{architecture}
 \end{figure}
-The individual modules at the top layer include the choice between SmartFridge and Sudoku solver. Once the choice is made, the user gives specific inputs with regards to his project. As an example, this includes the type of fruit in the case of SmartFridge. The next layer of choices include parameters for the rendering. For example, the mesh and material of the fruit. All these choices are used in the python script used by blender to generate rendered images.
+The individual modules at the top layer include the GUI containing the choice between SmartFridge and Sudoku solver and the corresponding modules to produce the images. This Architecture is shown in Figure \ref{architecture}. The extra Sudoku class had to be implemented to conform the requirement for keeping the puzzles numbers while other parameters change. The blender script would have initialized them different numbers on every call.\\
+Once the choice is made, the user gives specific inputs with regards to his project. As an example, this includes the type of fruit in the case of SmartFridge. The next layer of choices include parameters for the rendering. For example, the mesh and material of the fruit. All these choices are used in the python script used by blender to generate rendered images. This workflow is visualized in the OPM diagram in Figure \ref{workflow}
 
+\begin{figure}[H]
+\includegraphics[scale=0.5]{system_workflow.png}
+\caption{System workflow}
+\label{workflow}
+\end{figure}
 
 \section{Data Design}
 \subsection{Data Description}
