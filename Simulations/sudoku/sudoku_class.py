@@ -99,7 +99,7 @@ class Sudoku:
 
     def create(self):
         string_call = 'blender'
-        subprocess.call([string_call,"-b","--python",'./generate_sudoku_scene.py',"--","--difficulty",str(s.difficulty),"--errors",str(s.errors),"--completion",str(s.completion),"--resolution","%d"%s.r_x,"%d"%s.r_y,"--solved","%s"%s.complete_sudoku,"--unsolved","%s"%s.unsolved_sudoku,"--frontal_view","%s"%s.frontal_view,"--num_images",str(s.num_images),"--change_sudoku",str(s.change_sudoku),"--mix_fonts",str(s.mix_fonts),"--path",str(s.path)])
+        subprocess.call([string_call,"-b","--python",'./generate_sudoku_scene.py',"--","--difficulty",str(self.difficulty),"--errors",str(self.errors),"--completion",str(self.completion),"--resolution","%d"%self.r_x,"%d"%self.r_y,"--solved","%s"%self.complete_sudoku,"--unsolved","%s"%self.unsolved_sudoku,"--frontal_view","%s"%self.frontal_view,"--num_images",str(self.num_images),"--change_sudoku",str(self.change_sudoku),"--mix_fonts",str(self.mix_fonts),"--path",str(self.path)])
 
 if __name__ == '__main__':
     s = Sudoku("./Bilder", "Insane", 0, 2)
