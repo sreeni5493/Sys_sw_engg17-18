@@ -4,7 +4,7 @@ import subprocess
 #import sudoku
 
 class Sudoku:
-    def __init__(self, difficulty, errors = 0, completion = 1, res_x = 1920, res_y = 1080, frontal_view = 1, num_images = 1, change_sudoku = 1, mix_fonts = 0):
+    def __init__(self, difficulty, path, errors = 0, completion = 1, res_x = 1920, res_y = 1080, frontal_view = 1, num_images = 1, change_sudoku = 1, mix_fonts = 0):
         self.cTex_hand = []
         self.cTex_font = []
         self.precreated_sudoku_dict = {"Easy" : [[1, 5, 2, 6, 4, 3, 7, 9, 8, 9, 3, 7, 1, 5, 8, 2, 6, 4, 8, 4, 6, 9, 7, 2, 5, 1, 3, 3, 9, 8, 5, 6, 4, 1, 2, 7, 4, 6, 5, 2, 1, 7, 3, 8, 9, 2, 7, 1, 3, 8, 9, 6, 4, 5, 5, 8, 9, 7, 2, 6, 4, 3, 1, 6, 1, 3, 4, 9, 5, 8, 7, 2, 7, 2, 4, 8, 3, 1, 9, 5, 6],\
@@ -35,6 +35,7 @@ class Sudoku:
         self.num_images = num_images
         self.change_sudoku = change_sudoku
         self.mix_fonts = mix_fonts
+        self.path = path
     
     """def create_new_sudoku(self):
         start = time.time()
@@ -98,7 +99,7 @@ class Sudoku:
 
     def create(self):
         string_call = 'blender'
-        subprocess.call([string_call,"-b","--python",'./generate_sudoku_scene.py',"--","--difficulty","%s"%s.difficulty,"--errors","%d"%s.errors,"--completion","%d"%s.completion,"--resolution","%d"%s.r_x,"%d"%s.r_y,"--solved","%s"%s.complete_sudoku,"--unsolved","%s"%s.unsolved_sudoku,"--frontal_view","%s"%s.frontal_view,"--num_images",str(s.num_images),"--change_sudoku",str(s.change_sudoku),"--mix_fonts",str(s.mix_fonts)])
+        subprocess.call([string_call,"-b","--python",'./generate_sudoku_scene.py',"--","--difficulty","%s"%s.difficulty,"--errors","%d"%s.errors,"--completion","%d"%s.completion,"--resolution","%d"%s.r_x,"%d"%s.r_y,"--solved","%s"%s.complete_sudoku,"--unsolved","%s"%s.unsolved_sudoku,"--frontal_view","%s"%s.frontal_view,"--num_images",str(s.num_images),"--change_sudoku",str(s.change_sudoku),"--mix_fonts",str(s.mix_fonts)],"--path",s.path)
 
 if __name__ == '__main__':
     s = Sudoku("Insane", 0, 2)

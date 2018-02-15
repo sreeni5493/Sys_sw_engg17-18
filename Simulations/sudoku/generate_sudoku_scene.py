@@ -307,5 +307,5 @@ if __name__ == '__main__':
         if (int(argv[argv.index("--frontal_view") + 1]) == 0):
             s.rotate_camera()
         s.induce_errors()
-        s.write("image%d"%i)
+        s.write("%ssudoku%d"%(argv[argv.index("--path") + 1],i))
         #s.crumble("image")
