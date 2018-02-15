@@ -217,6 +217,7 @@ class SudokuScene:
         bpy.data.scenes['Scene'].render.filepath = '%s.png'%filename
         bpy.context.scene.render.resolution_x = self.r_x
         bpy.context.scene.render.resolution_y = self.r_y
+        bpy.context.scene.render.resolution_percentage = 100
         bpy.ops.render.render( write_still=True ) 
         solution = ""
         errors = ""
