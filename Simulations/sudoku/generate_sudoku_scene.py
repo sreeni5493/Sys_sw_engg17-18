@@ -203,7 +203,10 @@ class SudokuScene:
                 r = floor(random()*9)+1
                 if r != correct_val:
                     break
-            error_plane.data.materials[0].texture_slots[0].texture = self.cTex_hand[r]
+            if self.mix_fonts == 1:
+                error_plane.data.materials[0].texture_slots[0].texture = self.cTex_hand[floor(random()*3)][r]
+            else:
+                error_plane.data.materials[0].texture_slots[0].texture = self.fix_cTex_hand[r]
             #error_plane.data.materials[0].diffuse_color = (1,0,0)
             #print("%d: %d -> %d" % (x+1,correct_val,r))
             #print("x: %d, y: %d" % (floor(x/9)+1,9-(x%9)))
@@ -307,5 +310,5 @@ if __name__ == '__main__':
         if (int(argv[argv.index("--frontal_view") + 1]) == 0):
             s.rotate_camera()
         s.induce_errors()
-        s.write("%s/sudoku%d"%(argv[argv.index("--path") + 1],i))
+        s.write("%ssudoku%d"%(argv[argv.index("--path") + 1],i))
         #s.crumble("image")
