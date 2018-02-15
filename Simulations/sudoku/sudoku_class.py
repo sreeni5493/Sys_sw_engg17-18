@@ -97,15 +97,17 @@ class Sudoku:
         else:
             self.mix_fonts = 0
 
+    def set_path(self,val):
+        self.path = val
+
     def create(self):
         string_call = 'blender'
         subprocess.call([string_call,"-b","--python",'./generate_sudoku_scene.py',"--","--difficulty",str(self.difficulty),"--errors",str(self.errors),"--completion",str(self.completion),"--resolution","%d"%self.r_x,"%d"%self.r_y,"--solved","%s"%self.complete_sudoku,"--unsolved","%s"%self.unsolved_sudoku,"--frontal_view","%s"%self.frontal_view,"--num_images",str(self.num_images),"--change_sudoku",str(self.change_sudoku),"--mix_fonts",str(self.mix_fonts),"--path",str(self.path)])
 
 if __name__ == '__main__':
-    s = Sudoku("./Bilder", "Insane", 0, 2)
-    s.set_num_images(5)
+    s = Sudoku("./Bilder", "Medium", 1, 2)
+    s.set_num_images(1)
     s.set_change_sudoku(False)
-    s.set_frontal_view(False)
-    s.set_mix_fonts(True)
+    s.set_frontal_view(True)
+    s.set_mix_fonts(False)
     s.create()
-
