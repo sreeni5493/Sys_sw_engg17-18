@@ -60,25 +60,21 @@ This document provides use cases for the simulation platform for rottening fruit
 \hline
 \textbf{Main Scenario} & Step & Action\\
 \hline
- & 1 & Program shows start dialogue containing buttons for choice between SmartFridge and Sudoku\\
+ & 1 & Program shows start dialogue containing choice between SmartFridge and Sudoku\\
 \cline{2-3}
  & 2 & User chooses SmartFridge\\
 \cline{2-3}
  & 3 & Program displays parameter selection with default values\\
 \cline{2-3}
- & 4 & User changes parameters at will \\
+ & 4 & User specifies amount and save path of the images \\
 \cline{2-3}
- & 5 & Program displays rendered image for given input parameters \\
+ & 5 & User changes parameters at will \\
 \cline{2-3}
- & 6 & User chooses whether to reject or save the image \\
+ & 6 & Images are written to the specified path \\
 \hline
 \textbf{Extensions} & \textbf{Step} & \textbf{Branching Action} \\
 \hline
-& 4.1 & User insert number and sort of fruit. \\
-\cline{2-3}
-& 4.2 & Program shows preview of the scene to render \\
-\hline
-\textbf{Issues} & \multicolumn{2}{X|}{How does the selection look like? Does the user click through multiple images or does he get only one image per generation?} \\
+& - & - \\
 \hline
 \end{tabularx}
  \\
@@ -112,17 +108,15 @@ This document provides use cases for the simulation platform for rottening fruit
 \cline{2-3}
  & 3 & Program displays parameter selection with default values\\
 \cline{2-3}
- & 4 & User changes parameters at will \\
+ & 4 & User specifies amount and save path of the images \\
 \cline{2-3}
- & 5 & Program displays rendered image for given input parameters \\
+ & 5 & User changes parameters at will \\
 \cline{2-3}
- & 6 & User chooses whether to reject or save image \\
+ & 6 & Images are written to the specified path \\
 \hline
 \textbf{Extensions} & \textbf{Step} & \textbf{Branching Action} \\
 \hline
-& 4.1 & Program shows preview of the Sudoku scene to render. \\
-\hline
-\textbf{Issues} & \multicolumn{2}{X|}{How does the selection look like? Does the user click through multiple images or does he get only one image per generation?} \\
+& - & - \\
 \hline
 \end{tabularx}
  \\
@@ -156,9 +150,12 @@ This document provides use cases for the simulation platform for rottening fruit
 \hline
 \textbf{Extensions} & \textbf{Step} & \textbf{Branching Action} \\
 \hline
-& 1.1 & The developer has to apply the parameter types and names for his mesh generating routine \\
+ & - & - \\
 \hline
-\textbf{Issues} & \multicolumn{2}{X|}{How does the selection look like? Does the user click through multiple images or does he get only one image per generation?} \\
+\textbf{Issues} &  \multicolumn{2}{X|}{
+ $\circ$ How does the access look like? Will there be a specific interface?
+ } \\
+ &  \multicolumn{2}{X|}{$\circ$ How to specify positioning of the new models inside the scene?}\\
 \hline
 \end{tabularx}
 \subsection{UML diagram}
