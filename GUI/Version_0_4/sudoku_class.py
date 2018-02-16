@@ -104,6 +104,10 @@ class Sudoku:
         string_call = 'blender'
         subprocess.call([string_call,"-b","--python",'./generate_sudoku_scene.py',"--","--difficulty",str(self.difficulty),"--errors",str(self.errors),"--completion",str(self.completion),"--resolution","%d"%self.r_x,"%d"%self.r_y,"--solved","%s"%self.complete_sudoku,"--unsolved","%s"%self.unsolved_sudoku,"--frontal_view","%s"%self.frontal_view,"--num_images",str(self.num_images),"--change_sudoku",str(self.change_sudoku),"--mix_fonts",str(self.mix_fonts),"--path",str(self.path)])
 
+        self.done = True
+        return self.done
+
+
 if __name__ == '__main__':
     s = Sudoku("./Bilder", "Medium", 1, 2)
     s.set_num_images(1)
